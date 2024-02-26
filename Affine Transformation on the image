@@ -1,0 +1,28 @@
+import cv2
+import numpy as np
+from google.colab.patches import cv2_imshow
+
+# read the input image
+img = cv2.imread("/content/naturee.jfif")
+
+# access the image height and width
+rows, cols, _ = img.shape
+
+# define three points on the input image
+pts1 = np.float32([[50,50],[200,50],[50,200]])
+
+# define three points corresponding to the output image
+pts2 = np.float32([[10,100],[200,50],[100,250]])
+
+# get the affine transformation matrix
+M = cv2.getAffineTransform(pts1, pts2)
+
+# apply affine transformation on the input image
+dst = cv2.warpAffine(img, M, (cols, rows))
+
+# display the transformed image
+cv2_imshow(dst)
+
+# wait for a key press and close all OpenCV windows
+cv2.waitKey(0)
+cv2.destroyAllWindows()
